@@ -76,12 +76,36 @@ public class FXMLController {
     	txtResult.appendText("# Vertici: "+this.model.getNumVertici()+"\n");
     	txtResult.appendText("# Archi: "+this.model.getNumArchi()+"\n");
     	btnSimili.setDisable(false);
+    	btnSimulazione.setDisable(false);
     	this.boxAttore.getItems().clear();
     	this.boxAttore.getItems().addAll(this.model.getVertici());
     }
 
     @FXML
     void doSimulazione(ActionEvent event) {
+    	
+    	txtResult.clear();
+    	try {
+    		
+    		int giorni = Integer.parseInt(txtGiorni.getText());
+    		
+    		if (giorni<=0) {
+    			txtResult.setText("Inserire un numero naturale per i giorni");
+    			return;
+    		}
+    		
+    		this.model.simula(giorni);
+    		this.txtResult.appendText("Simulazione completata!\n");
+    		this.txtResult.appendText("Lista degli intervistati:\n");
+    		for (Actor a : this.model.getIntervistati()) {
+    			this.txtResult.appendText(a.toString()+"\n");
+    		}
+    		this.txtResult.appendText("Giorni totali di pausa: "+this.model.getGiorniPausa()+"\n");
+    		
+    	} catch(NumberFormatException e) {
+    		txtResult.setText("Errore: inserire un valore numerico intero per i giorni.");
+    		return;
+    	}
 
     }
 

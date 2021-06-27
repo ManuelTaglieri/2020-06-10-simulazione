@@ -22,6 +22,7 @@ public class Model {
 	private Graph<Actor, DefaultWeightedEdge> grafo;
 	private ImdbDAO dao;
 	private Map<Integer, Actor> idMap;
+	private Simulazione sim;
 	
 	public Model() {
 		this.dao = new ImdbDAO();
@@ -49,7 +50,7 @@ public class Model {
 		return this.grafo.edgeSet().size();
 	}
 	
-	public Collection<Actor> getVertici() {
+	public List<Actor> getVertici() {
 		List<Actor> risultato = new LinkedList<>(this.idMap.values());
 		Collections.sort(risultato);
 		return risultato;
@@ -68,6 +69,20 @@ public class Model {
 	
 	public List<String> getGeneri() {
 		return this.dao.getGeneri();
+	}
+	
+	public void simula(int giorni) {
+		this.sim = new Simulazione();
+		this.sim.init(giorni, getVertici(), grafo);
+		this.sim.run();
+	}
+	
+	public int getGiorniPausa() {
+		return this.sim.getGiorniPausa();
+	}
+	
+	public List<Actor> getIntervistati() {
+		return this.sim.getIntervistati();
 	}
 
 }
