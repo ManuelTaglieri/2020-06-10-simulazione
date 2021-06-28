@@ -50,9 +50,17 @@ public class Simulazione {
 				this.intervistati.add(corrente);
 			} else {
 				corrente = getMigliore(corrente);
+				if (corrente==null) {
+					corrente = this.attori.get(caso.nextInt(attori.size()));
+					if (corrente.getGender().equals(this.intervistati.get(intervistati.size()-1).getGender())) {
+						stessoGenere = true;
+					}
+					this.attori.remove(corrente);
+					this.intervistati.add(corrente);
+				} else {
 				if (corrente.getGender().equals(this.intervistati.get(intervistati.size()-1).getGender())) {
 					stessoGenere = true;
-				}
+				}}
 				this.attori.remove(corrente);
 				this.intervistati.add(corrente);
 			}
